@@ -19,41 +19,37 @@
         header {
             background: linear-gradient(135deg, #ff6600, #ff9933);
             color: white;
-            padding: 25px 15px;
+            padding: 20px 15px;
             text-align: center;
         }
-        /* १. लोगो डिझाइन */
+        /* १. मोठा आणि आयताकृती (Rectangular) लोगो डिझाइन */
         .logo-container img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            border-radius: 8px;
             border: 3px solid white;
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        header h1 {
-            margin: 12px 0 0 0;
-            font-size: 20px;
+            object-fit: contain;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: block;
+            margin: 0 auto;
         }
         .container {
             padding: 20px 15px;
             max-width: 600px;
             margin: auto;
         }
-        /* ३ मुख्य बटन्स */
+        /* ३ मुख्य बटन्स (दोन ओळींचे टेक्स्ट डिझाइन) */
         .menu-btn {
             background: white;
             border: none;
-            padding: 18px 15px;
+            padding: 15px 20px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             text-align: left;
             cursor: pointer;
             width: 100%;
             margin-bottom: 15px;
-            font-size: 15px;
-            font-weight: bold;
-            color: #333;
             transition: 0.3s;
             display: flex;
             align-items: center;
@@ -63,6 +59,30 @@
             background: var(--primary);
             color: white;
             transform: translateY(-2px);
+        }
+        .menu-text .title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #222;
+            display: block;
+        }
+        .menu-text .sub-title {
+            font-size: 13px;
+            color: #666;
+            display: block;
+            margin-top: 3px;
+        }
+        .menu-btn:hover .menu-text .title,
+        .menu-btn:hover .menu-text .sub-title {
+            color: white;
+        }
+        .arrow {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6600;
+        }
+        .menu-btn:hover .arrow {
+            color: white;
         }
         /* माहिती दाखवण्यासाठीचे बॉक्सेस */
         .section-box {
@@ -95,30 +115,38 @@
 <body>
 
     <header>
-        <!-- १. लोगो -->
+        <!-- १. मोठा आणि आयताकृती लोगो (तुमच्या फाईलचे नाव: aapla_pratishthan-20260824-0001.jpg) -->
         <div class="logo-container">
-            <img src="47650.jpg" alt="श्री शिवमल्हार स्वराज्य प्रतिष्ठान लोगो">
+            <img src="aapla_pratishthan-20260824-0001.jpg" alt="श्री शिवमल्हार स्वराज्य प्रतिष्ठान लोगो">
         </div>
-        <h1>श्री शिवमल्हार स्वराज्य प्रतिष्ठान</h1>
     </header>
 
     <div class="container" id="main-menu">
-        <!-- बटन १: संस्थापक-प्रमुख -->
+        <!-- बटन २: संस्थापक-प्रमुख -->
         <button class="menu-btn" onclick="showSection('founder')">
-            <span>संस्थापक-प्रमुख | श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
-            <span>➔</span>
+            <div class="menu-text">
+                <span class="title">संस्थापक-प्रमुख</span>
+                <span class="sub-title">श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
+            </div>
+            <span class="arrow">➔</span>
         </button>
 
-        <!-- बटन २: सार्वजनिक मित्र मंडळ -->
+        <!-- बटन ३: सार्वजनिक मित्र मंडळ -->
         <button class="menu-btn" onclick="showSection('mitra')">
-            <span>सार्वजनिक मित्र मंडळ | श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
-            <span>➔</span>
+            <div class="menu-text">
+                <span class="title">सार्वजनिक मित्र मंडळ</span>
+                <span class="sub-title">श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
+            </div>
+            <span class="arrow">➔</span>
         </button>
 
-        <!-- बटन ३: राजकीय पॅनल -->
+        <!-- बटन ४: राजकीय पॅनल -->
         <button class="menu-btn" onclick="showSection('political')">
-            <span>राजकीय पॅनल | श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
-            <span>➔</span>
+            <div class="menu-text">
+                <span class="title">राजकीय पॅनल</span>
+                <span class="sub-title">श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
+            </div>
+            <span class="arrow">➔</span>
         </button>
     </div>
 
