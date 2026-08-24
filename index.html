@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्री शिवमल्हार स्वराज्य प्रतिष्ठान - महाव्यवस्थापन प्रणाली</title>
+    <style>
+        :root {
+            --primary: #ff6600;
+            --secondary: #008000;
+            --bg: #f4f6f9;
+            --dark: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #ff6600, #ff9933);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        header h1 { margin: 5px 0; font-size: 20px; }
+        header p { margin: 0; font-size: 13px; opacity: 0.9; }
+
+        .container { padding: 15px; max-width: 700px; margin: auto; }
+        
+        /* डॅशबोर्ड कार्ड्स */
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+        .card h3 { color: var(--primary); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 5px; font-size: 16px; }
+
+        /* फॉर्म नियंत्रणे */
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 15px;
+        }
+        .btn-green { background: var(--secondary); }
+        .btn:hover { opacity: 0.9; }
+
+        /* यादी (List) डिझाइन */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th { background-color: #ff6600; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        .filter-box { display: flex; gap: 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>श्री शिवमल्हार स्वराज्य प्रतिष्ठान</h1>
+        <p>पदाधिकारी व कार्य व्यवस्थापन पोर्टल (अनलिमिटेड)</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- नवीन पदाधिकारी नोंदणी फॉर्म -->
+        <div class="card">
+            <h3>➕ नवीन पदाधिकारी / कार्यकर्ता जोडा</h3>
+            <form id="officerForm" onsubmit="addOfficer(event)">
+                <input type="text" id="name" placeholder="पदाधिकाऱ्याचे पूर्ण नाव" required>
+                
+                <select id="level" required>
+                    <option value="">-- पातळी निवडा --</option>
+                    <option value="राज्य स्तर">राज्य स्तर (४० पदाधिकारी)</option>
+                    <option value="महानगर">महानगर</option>
+                    <option value="नगरपालिका">नगरपालिका</option>
+                    <option value="जिल्हा">जिल्हा</option>
+                    <option value="तालुका">तालुका</option>
+                    <option value="ग्रामपंचायत">ग्रामपंचायत</option>
+                    <option value="वॉर्ड">वॉर्ड</option>
+                    <option value="इतर">इतर</option>
+                </select>
+
+                <input type="text" id="designation" placeholder="पद (उदा. अध्यक्ष, सचिव, संघटक)" required>
+                <input type="tel" id="mobile" placeholder="मोबाईल नंबर" required>
+                <textarea id="task" placeholder="दिलेले काम / जबाबदारी" rows="2" required></textarea>
+                
+                <button type="submit" class="btn">माहिती सेव्ह करा</button>
+            </form>
+        </div>
+
+        <!-- फिल्टर आणि डेटा पाहण्यासाठी -->
+        <div class="card">
+            <h3>📋 पदाधिकाऱ्यांची यादी व कामांची स्थिती</h3>
+            
+            <div class="filter-box">
+                <select id="filterLevel" onchange="filterData()">
+                    <option value="ALL">सर्व स्तर पहा</option>
+                    <option value="राज्य स्तर">राज्य स्तर</option>
+                    <option value="महानगर">महानगर</option>
+                    <option value="नगरपालिका">नगरपालिका</option>
+                    <option value="जिल्हा">जिल्हा</option>
+                    <option value="तालुका">तालुका</option>
+                    <option value="ग्रामपंचायत">ग्रामपंचायत</option>
+                    <option value="वॉर्ड">वॉर्ड</option>
+                </select>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>नाव व मोबाईल</th>
+                            <th>पातळी व पद</th>
+                            <th>दिलेले काम</th>
+                            <th>कृती</th>
+                        </tr>
+                    <thead id="tableBody">
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // लोड करताना डेटा काढणे
+        document.addEventListener("DOMContentLoaded", displayOfficers);
+
+        function addOfficer(event) {
+            event.preventDefault();
+
+            const newOfficer = {
+                id: Date.now(),
+                name: document.getElementById('name').value,
+                level: document.getElementById('level').value,
+                designation: document.getElementById('designation').value,
+                mobile: document.getElementById('mobile').value,
+                task: document.getElementById('task').value
+            };
+
+            let officers = JSON.parse(localStorage.getItem('shivmalhar_officers')) || [];
+            officers.push(newOfficer);
+            localStorage.setItem('shivmalhar_officers', JSON.stringify(officers));
+
+            alert('पदाधिकारी यशस्वीरित्या जोडले गेले!');
+            document.getElementById('officerForm').reset();
+            displayOfficers();
+        }
+
+        function displayOfficers() {
+            let officers = JSON.parse(localStorage.getItem('shivmalhar_officers')) || [];
+            renderTable(officers);
+        }
+
+        function filterData() {
+            let selectedLevel = document.getElementById('filterLevel').value;
+            let officers = JSON.parse(localStorage.getItem('shivmalhar_officers')) || [];
+
+            if (selectedLevel === 'ALL') {
+                renderTable(officers);
+            } else {
+                let filtered = officers.filter(o => o.level === selectedLevel);
+                renderTable(filtered);
+            }
+        }
+
+        function renderTable(data) {
+            let tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">कोणतीही माहिती उपलब्ध नाही.</td></tr>';
+                return;
+            }
+
+            data.forEach(officer => {
+                let row = `<tr>
+                    <td><strong>${officer.name}</strong><br><small>📞 ${officer.mobile}</small></td>
+                    <td><span style="color:red; font-weight:bold;">${officer.level}</span><br>${officer.designation}</td>
+                    <td>${officer.task}</td>
+                    <td><button onclick="deleteOfficer(${officer.id})" style="background:red; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;">डिलीट</button></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function deleteOfficer(id) {
+            if (confirm('तुम्हाला हा रेकॉर्ड डिलीट करायचा आहे का?')) {
+                let officers = JSON.parse(localStorage.getItem('shivmalhar_officers')) || [];
+                let updated = officers.filter(o => o.id !== id);
+                localStorage.setItem('shivmalhar_officers', JSON.stringify(updated));
+                displayOfficers();
+            }
+        }
+    </script>
+</body>
+</html>
