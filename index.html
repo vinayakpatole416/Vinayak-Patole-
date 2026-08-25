@@ -84,46 +84,20 @@
         .menu-btn:hover .arrow {
             color: white;
         }
-        /* माहिती दाखवण्यासाठीचे बॉक्सेस */
-        .section-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: none;
-            margin-top: 10px;
-        }
-        .section-box h2 {
-            color: var(--primary);
-            font-size: 18px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 8px;
-            margin-top: 0;
-        }
-        .back-btn {
-            background: #666;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- १. मोठा आणि आयताकृती लोगो (तुमच्या फाईलचे नाव: aapla_pratishthan-20260824-0001.jpg) -->
+        <!-- लोगो -->
         <div class="logo-container">
             <img src="aapla_pratishthan-20260824-0001.jpg" alt="श्री शिवमल्हार स्वराज्य प्रतिष्ठान लोगो">
         </div>
     </header>
 
     <div class="container" id="main-menu">
-        <!-- बटन २: संस्थापक-प्रमुख -->
-        <button class="menu-btn" onclick="showSection('founder')">
+        <!-- संस्थापक-प्रमुख बटण (founder.html शी जोडले) -->
+        <button class="menu-btn" onclick="location.href='founder.html'">
             <div class="menu-text">
                 <span class="title">संस्थापक-प्रमुख</span>
                 <span class="sub-title">श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
@@ -131,8 +105,8 @@
             <span class="arrow">➔</span>
         </button>
 
-        <!-- बटन ३: सार्वजनिक मित्र मंडळ -->
-        <button class="menu-btn" onclick="showSection('mitra')">
+        <!-- सार्वजनिक मित्र मंडळ बटण (mitra.html शी जोडले) -->
+        <button class="menu-btn" onclick="location.href='mitra.html'">
             <div class="menu-text">
                 <span class="title">सार्वजनिक मित्र मंडळ</span>
                 <span class="sub-title">श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
@@ -140,8 +114,8 @@
             <span class="arrow">➔</span>
         </button>
 
-        <!-- बटन ४: राजकीय पॅनल -->
-        <button class="menu-btn" onclick="showSection('political')">
+        <!-- राजकीय पॅनल बटण (political.html शी जोडले) -->
+        <button class="menu-btn" onclick="location.href='political.html'">
             <div class="menu-text">
                 <span class="title">राजकीय पॅनल</span>
                 <span class="sub-title">श्री शिवमल्हार स्वराज्य प्रतिष्ठान</span>
@@ -150,4 +124,5 @@
         </button>
     </div>
 
-    
+</body>
+</html>
