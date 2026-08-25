@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सार्वजनिक मित्र मंडळ - श्री शिवमल्हार स्वराज्य प्रतिष्ठान</title>
+    <style>
+        :root { --primary: #ff6600; --bg: #f4f6f9; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
+        header { background: linear-gradient(135deg, #ff6600, #ff9933); color: white; padding: 15px; text-align: center; }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .back-btn { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        th { background-color: #ff6600; color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>सार्वजनिक मित्र मंडळ: कार्य व उपक्रम व्यवस्थापन</h2>
+    </header>
+
+    <div class="container">
+        <!-- मुख्य पानावर जाण्यासाठी बटन -->
+        <button class="back-btn" onclick="location.href='index.html'">← मुख्य पानावर जा</button>
+
+        <!-- नवीन उपक्रम किंवा कार्यक्रम जोडण्याचा फॉर्म -->
+        <div class="card">
+            <h3 style="margin-top:0; font-size:15px; color:#ff6600;">➕ नवीन कार्यक्रम/उपक्रम जोडा</h3>
+            <form onsubmit="addEvent(event)">
+                <input type="text" id="eventName" placeholder="उपक्रमाचे/कार्याचा नाव (उदा. रक्तदान शिबिर)" required>
+                <select id="eventType" required>
+                    <option value="">-- प्रकार निवडा --</option>
+                    <option value="सामाजिक उपक्रम">सामाजिक उपक्रम</option>
+                    <option value="सण व उत्सव">सण व उत्सव (शिवजयंती इ.)</option>
+                    <option value="आरोग्य शिबिर">आरोग्य शिबिर</option>
+                    <option value="इतर कार्यक्रम">इतर कार्यक्रम</option>
+                </select>
+                <input type="date" id="eventDate" required>
+                <input type="text" id="eventLocation" placeholder="ठिकाण" required>
+                <textarea id="eventDetails" placeholder="कार्याची सविस्तर माहिती" rows="2" required></textarea>
+                <button type="submit" class="btn">माहिती सेव्ह करा</button>
+            </form>
+        </div>
+
+        <!-- उपक्रम व कार्यक्रमांची यादी -->
+        <div class="card">
+            <h3 style="font-size:15px;">📋 आयोजित कार्यक्रमांची यादी</h3>
+            <select id="filterType" onchange="filterEvents()" style="margin-bottom:10px;">
+                <option value="ALL">सर्व प्रकार पहा</option>
+                <option value="सामाजिक उपक्रम">सामाजिक उपक्रम</option>
+                <option value="सण व उत्सव">सण व उत्सव</option>
+                <option value="आरोग्य शिबिर">आरोग्य शिबिर</option>
+                <option value="इतर कार्यक्रम">इतर कार्यक्रम</option>
+            </select>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>उपक्रम व दिनांक</th>
+                            <th>प्रकार व ठिकाण</th>
+                            <th>तיपशील</th>
+                            <th>कृती</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- डेटा इथे डायनॅमिक लोड होईल -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", displayEvents);
+
+        function addEvent(event) {
+            event.preventDefault();
+            let newObj = {
+                id: Date.now(),
+                name: document.getElementById('eventName').value,
+                type: document.getElementById('eventType').value,
+                date: document.getElementById('eventDate').value,
+                location: document.getElementById('eventLocation').value,
+                details: document.getElementById('eventDetails').value
+            };
+
+            let list = JSON.parse(localStorage.getItem('shivmalhar_mitra_events')) || [];
+            list.push(newObj);
+            localStorage.setItem('shivmalhar_mitra_events', JSON.stringify(list));
+            alert('कार्यक्रम यशस्वीरित्या सेव्ह झाला!');
+            event.target.reset();
+            displayEvents();
+        }
+
+        function displayEvents() {
+            let list = JSON.parse(localStorage.getItem('shivmalhar_mitra_events')) || [];
+            renderTable(list);
+        }
+
+        function filterEvents() {
+            let val = document.getElementById('filterType').value;
+            let list = JSON.parse(localStorage.getItem('shivmalhar_mitra_events')) || [];
+            if(val === 'ALL') {
+                renderTable(list);
+            } else {
+                let filtered = list.filter(e => e.type === val);
+                renderTable(filtered);
+            }
+        }
+
+        function renderTable(data) {
+            let tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            if(data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">कोणतीही माहिती उपलब्ध नाही.</td></tr>';
+                return;
+            }
+            data.forEach(e => {
+                tbody.innerHTML += `<tr>
+                    <td><b>${e.name}</b><br>📅 ${e.date}</td>
+                    <td><span style="color:#ff6600; font-weight:bold;">${e.type}</span><br>📍 ${e.location}</td>
+                    <td>${e.details}</td>
+                    <td><button onclick="deleteEvent(${e.id})" style="background:red; color:white; border:none; padding:3px 6px; border-radius:3px; cursor:pointer;">डिलीट</button></td>
+                </tr>`;
+            });
+        }
+
+        function deleteEvent(id) {
+            if(confirm('हा रेकॉर्ड डिलीट करायचा आहे का?')) {
+                let list = JSON.parse(localStorage.getItem('shivmalhar_mitra_events')) || [];
+                let updated = list.filter(e => e.id !== id);
+                localStorage.setItem('shivmalhar_mitra_events', JSON.stringify(updated));
+                displayEvents();
+            }
+        }
+    </script>
+</body>
+</html>
